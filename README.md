@@ -12,6 +12,7 @@ using a fully serverless AWS architecture. The dashboard refreshes
 automatically on a schedule and is securely delivered via CloudFront.
 
 ## 🏗️ Architecture
+```
 ┌─────────────────────────────────────────────────────┐
 │                   DATA LAYER                         │
 │  AWS Glue (ETL) → Athena (Query) → S3 (Raw Storage) │
@@ -38,7 +39,7 @@ automatically on a schedule and is securely delivered via CloudFront.
 └─────────────────────────────────────────────────────┘
                       │
                  [End User/Browser]
-
+```
 
 ![Architecture Diagram](ARCHITECTURE.png)
 
