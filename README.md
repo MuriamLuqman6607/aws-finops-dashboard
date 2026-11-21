@@ -22,8 +22,6 @@ Amazon CloudFront (CDN - Secure delivery)
         ↓
 End User (Read-only, via URL)
 
-![Architecture Diagram](architecture.png)
-
 ## 🛠️ Tech Stack
 | Service | Purpose |
 |---|---|
