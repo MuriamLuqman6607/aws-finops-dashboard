@@ -32,12 +32,16 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ## 3. Services Used
 | AWS Service | Purpose |
 |---|---|
-| AWS Lambda | Generates dashboard HTML automatically |
-| Amazon S3 | Stores dashboard files (KMS encrypted) |
-| Amazon CloudFront | Delivers dashboard globally via CDN |
-| Amazon EventBridge | Triggers Lambda on a schedule |
-| AWS KMS | Encrypts data at rest |
-| AWS IAM | Manages permissions and access control |
+| AWS Lambda | Automated dashboard generation |
+| Amazon S3 | Secure encrypted file storage |
+| Amazon CloudFront | Global CDN secure delivery |
+| Amazon EventBridge | Scheduled automation |
+| AWS Glue | ETL data processing |
+| Amazon Athena | SQL querying of cost data |
+| AWS KMS | Encryption key management |
+| AWS ACM | SSL/TLS certificate management |
+| AWS IAM | Roles, policies & access control |
+
 
 ---
 
