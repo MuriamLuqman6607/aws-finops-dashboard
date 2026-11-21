@@ -12,26 +12,48 @@ using a fully serverless AWS architecture. The dashboard refreshes
 automatically on a schedule and is securely delivered via CloudFront.
 
 ## 🏗️ Architecture
-EventBridge (Scheduler)
-        ↓
-AWS Lambda (Data processing & HTML generation)
-        ↓
-Amazon S3 (Encrypted storage - KMS)
-        ↓
-Amazon CloudFront (CDN - Secure delivery)
-        ↓
-End User (Read-only, via URL)
+┌─────────────────────────────────────────────────────┐
+│                   DATA LAYER                         │
+│  AWS Glue (ETL) → Athena (Query) → S3 (Raw Storage) │
+└─────────────────────┬───────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────┐
+│                PROCESSING LAYER                      │
+│  EventBridge (Scheduler) → Lambda (Generator)        │
+└─────────────────────┬───────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────┐
+│                STORAGE LAYER                         │
+│  S3 (Dashboard Output) + KMS (Encryption)            │
+└─────────────────────┬───────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────┐
+│                DELIVERY LAYER                        │
+│  ACM (SSL Certificate) → CloudFront (CDN)            │
+└─────────────────────┬───────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────┐
+│                SECURITY LAYER                        │
+│  IAM (Roles & Policies) + KMS (Key Management)       │
+└─────────────────────────────────────────────────────┘
+                      │
+                 [End User/Browser]
+
 
 ![Architecture Diagram](ARCHITECTURE.png)
 
 ## 🛠️ Tech Stack
-| Service | Purpose |
+| AWS Service | Purpose |
 |---|---|
-| AWS Lambda | Automated data processing & dashboard generation |
-| Amazon S3 | Secure, encrypted file storage (KMS) |
-| Amazon CloudFront | Fast, global content delivery |
+| AWS Lambda | Automated dashboard generation |
+| Amazon S3 | Secure encrypted file storage |
+| Amazon CloudFront | Global CDN secure delivery |
 | Amazon EventBridge | Scheduled automation |
-| AWS KMS | Server-side encryption |
+| AWS Glue | ETL data processing |
+| Amazon Athena | SQL querying of cost data |
+| AWS KMS | Encryption key management |
+| AWS ACM | SSL/TLS certificate management |
+| AWS IAM | Roles, policies & access control |
 
 ## ✨ Features
 - Fully serverless — no servers to manage
