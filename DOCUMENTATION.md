@@ -81,16 +81,16 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ![Dashboard Preview](screenshot.png)
 
 ### Lambda Function
-![Lambda Function](lambda-screenshot.png)
+![Lambda Function](lambda-screenshot.PNG)
 
 ### S3 Bucket Configuration
-![S3 Bucket](s3-screenshot.png)
+![S3 Bucket](s3-screenshot.PNG)
 
 ### CloudFront Distribution
-![CloudFront](cloudfront-screenshot.png)
+![CloudFront](cloudfront-screenshot.PNG)
 
 ### EventBridge Schedule
-![EventBridge](eventbridge-screenshot.png)
+![EventBridge](eventbridge-screenshot.PNG)
 
 ---
 
