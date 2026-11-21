@@ -22,7 +22,7 @@ on a schedule — no servers, no manual work.
 ---
 
 ## 2. Architecture
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](ARCHITECTURE.png)
 
 **Flow:**
 EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → CloudFront (CDN) → End User
@@ -78,7 +78,7 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ## 6. Screenshots & Proof of Work
      
 ### Live Dashboard
-![Dashboard Preview](screenshot.png)
+![Dashboard Preview](screenshot.PNG)
 
 ### Lambda Function
 ![Lambda Function](lambda-screenshot.PNG)
