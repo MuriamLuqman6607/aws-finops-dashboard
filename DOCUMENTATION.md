@@ -76,7 +76,7 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ---
 
 ## 6. Screenshots & Proof of Work
-
+     
 ### Live Dashboard
 ![Dashboard Preview](screenshot.png)
 
