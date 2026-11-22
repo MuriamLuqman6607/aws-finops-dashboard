@@ -12,6 +12,13 @@ This project automatically generates and serves a FinOps dashboard
 using a fully serverless AWS architecture. The dashboard refreshes 
 automatically on a schedule and is securely delivered via CloudFront.
 
+**What this project demonstrates:**
+- End-to-end serverless AWS architecture
+- Data pipeline with Glue + Athena
+- Security best practices across all layers
+- Automated scheduling and deployment
+- Cost optimization with minimal infrastructure
+
 ## 🏗️ Architecture
 
 **Security Note:**
@@ -20,32 +27,36 @@ not a standalone layer. This follows the AWS Well-Architected
 Framework Security Pillar.
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                   DATA LAYER                         │
-│  AWS Glue (ETL) → Athena (Query) → S3 (Raw Storage) │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│                PROCESSING LAYER                      │
-│  EventBridge (Scheduler) → Lambda (Generator)        │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│                STORAGE LAYER                         │
-│  S3 (Dashboard Output) + KMS (Encryption)            │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│                DELIVERY LAYER                        │
-│  ACM (SSL Certificate) → CloudFront (CDN)            │
-└─────────────────────┬───────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────┐
-│                SECURITY LAYER                        │
-│  IAM (Roles & Policies) + KMS (Key Management)       │
-└─────────────────────────────────────────────────────┘
-                      │
-                 [End User/Browser]
+┌─────────────────────────────────────────────────────────────────┐
+│                         AWS CLOUD                               │
+│  ╔═══════════════════════════════════════════════════════════╗  │
+│  ║             SECURITY (IAM + KMS) — All Layers             ║  │
+│  ║                                                           ║  │
+│  ║  ┌───────────────────────────────────────────────────┐    ║  │
+│  ║  │                  DATA LAYER                       │    ║  │
+│  ║  │  [AWS Glue] ──▶ [Amazon Athena] ──▶ [S3]         │    ║  │
+│  ║  └──────────────────────┬────────────────────────────┘    ║  │
+│  ║                         │                                 ║  │
+│  ║  ┌──────────────────────▼────────────────────────────┐    ║  │
+│  ║  │               PROCESSING LAYER                    │    ║  │
+│  ║  │        [EventBridge] ──▶ [Lambda]                 │    ║  │
+│  ║  └──────────────────────┬────────────────────────────┘    ║  │
+│  ║                         │                                 ║  │
+│  ║  ┌──────────────────────▼────────────────────────────┐    ║  │
+│  ║  │                STORAGE LAYER                      │    ║  │
+│  ║  │           [S3 Bucket] ◀── [KMS]                   │    ║  │
+│  ║  └──────────────────────┬────────────────────────────┘    ║  │
+│  ║                         │                                 ║  │
+│  ║  ┌──────────────────────▼────────────────────────────┐    ║  │
+│  ║  │                DELIVERY LAYER                     │    ║  │
+│  ║  │        [ACM Certificate] ──▶ [CloudFront]         │    ║  │
+│  ║  └──────────────────────┬────────────────────────────┘    ║  │
+│  ║                         │                                 ║  │
+│  ╚═══════════════════════════════════════════════════════════╝  │
+└─────────────────────────────────────────────────────────────────┘
+                             │
+                   [End User / Browser]
+
 ```
 
 ![Architecture Diagram](ARCHITECTURE.jpg)
