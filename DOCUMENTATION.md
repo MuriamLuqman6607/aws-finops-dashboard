@@ -22,25 +22,52 @@ on a schedule — no servers, no manual work.
 ---
 
 ## 2. Architecture
-![Architecture Diagram](ARCHITECTURE.png)
+![Architecture Diagram](architecture.png)
+
+**Security Note:**
+IAM and KMS are cross-cutting concerns that protect 
+every layer — not a standalone layer. This follows the 
+AWS Well-Architected Framework Security Pillar.
 
 **Flow:**
-EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → CloudFront (CDN) → End User
+```
+┌─────────────────────────────────────────┐
+│  🔐 IAM + KMS — Spans All Layers        │
+│                                          │
+│  DATA:       Glue → Athena → S3         │
+│       ↓                                  │
+│  PROCESSING: EventBridge → Lambda       │
+│       ↓                                  │
+│  STORAGE:    S3 + KMS Encryption        │
+│       ↓                                  │
+│  DELIVERY:   ACM → CloudFront           │
+│                                          │
+└─────────────────────────────────────────┘
+              ↓
+       [End User/Browser]
+```
 
 ---
 
 ## 3. Services Used
-| AWS Service | Purpose |
-|---|---|
-| AWS Lambda | Automated dashboard generation |
-| Amazon S3 | Secure encrypted file storage |
-| Amazon CloudFront | Global CDN secure delivery |
-| Amazon EventBridge | Scheduled automation |
-| AWS Glue | ETL data processing |
-| Amazon Athena | SQL querying of cost data |
-| AWS KMS | Encryption key management |
-| AWS ACM | SSL/TLS certificate management |
-| AWS IAM | Roles, policies & access control |
+
+### Core Services
+| AWS Service | Layer | Purpose |
+|---|---|---|
+| AWS Glue | Data | ETL processing of cost data |
+| Amazon Athena | Data | SQL querying of cost data |
+| Amazon S3 | Data + Storage | Raw data + dashboard output |
+| Amazon EventBridge | Processing | Scheduled automation trigger |
+| AWS Lambda | Processing | Dashboard HTML generation |
+| Amazon CloudFront | Delivery | Global secure CDN delivery |
+| AWS ACM | Delivery | SSL/TLS certificate management |
+
+### Cross-Cutting Security Services
+| AWS Service | Covers | Purpose |
+|---|---|---|
+| AWS IAM | All Layers | Roles, policies & access control |
+| AWS KMS | All Layers | Encryption key management |
+
 
 
 ---
@@ -71,11 +98,14 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ---
 
 ## 5. Challenges & Solutions
+
 | Challenge | Solution |
 |---|---|
-| CloudFront could not read KMS encrypted S3 files | Added `kms:Decrypt` permission to KMS key policy for CloudFront OAC |
-| S3 bucket blocking CloudFront access | Configured OAC and updated S3 bucket policy |
-| Lambda missing S3 write permissions | Updated IAM execution role with correct S3 and KMS policies |
+| CloudFront could not decrypt KMS encrypted S3 files | Added `kms:Decrypt` to KMS key policy for CloudFront OAC |
+| S3 blocking CloudFront access | Configured OAC + updated S3 bucket policy |
+| Lambda missing S3 write permissions | Updated IAM execution role with least privilege policy |
+| Security needed across all layers | Applied IAM roles and KMS encryption at every layer individually |
+
 
 ---
 
@@ -99,11 +129,20 @@ EventBridge (Scheduler) → Lambda (Generator) → S3 (Encrypted Storage) → Cl
 ---
 
 ## 7. Future Work
-- [ ] Add custom domain with Route 53 and SSL certificate
-- [ ] Add authentication with Amazon Cognito
-- [ ] Expand dashboard with more cost metrics and filters
+
+### Security Enhancements
+- [ ] Add Amazon Cognito for user authentication
+- [ ] Enable AWS WAF on CloudFront distribution
+- [ ] Add AWS Config rules for compliance monitoring
+- [ ] Enable AWS CloudTrail for full audit logging
+
+### Feature Enhancements
+- [ ] Add custom domain with Route 53
+- [ ] Multi-account support via AWS Organizations
 - [ ] Add CloudWatch alarms for cost anomaly detection
-- [ ] Multi-account support using AWS Organizations
+- [ ] Expand dashboard with more cost metrics and filters
+- [ ] Add cost forecasting with AWS Cost Explorer API
+
 
 ---
 
