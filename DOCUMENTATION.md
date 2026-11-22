@@ -22,7 +22,7 @@ on a schedule — no servers, no manual work.
 ---
 
 ## 2. Architecture
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](ARCHITECTURE.jpg)
 
 **Security Note:**
 IAM and KMS are cross-cutting concerns that protect 
