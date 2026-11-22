@@ -187,9 +187,6 @@ Framework Security Pillar.
 ### KMS Key Configuration
 ![KMS Key](kms-screenshot.PNG)
 
-### ACM Certificate
-![ACM Certificate](acm-screenshot.PNG)
-
 ### CloudFront Distribution
 ![CloudFront](cloudfront-screenshot.PNG)
 
