@@ -31,6 +31,11 @@ on a schedule — no servers, no manual work.
 ## 2. Architecture
 ![Architecture Diagram](ARCHITECTURE.jpg)
 
+### ACM Certificate
+CloudFront provides built-in HTTPS via AWS managed 
+certificate on the *.cloudfront.net domain.
+Custom domain with ACM is listed under Future Work.
+
 **Security Note:**
 IAM and KMS are cross-cutting concerns that protect every layer —
 not a standalone layer. This follows the AWS Well-Architected
@@ -209,6 +214,11 @@ Framework Security Pillar.
 - [ ] Add CloudWatch alarms for cost anomaly detection
 - [ ] Expand dashboard with more cost metrics and filters
 - [ ] Add cost forecasting with AWS Cost Explorer API
+
+### Infrastructure Enhancements
+- [ ] Add custom domain with Route 53
+- [ ] Request ACM certificate for custom domain
+- [ ] Attach ACM certificate to CloudFront distribution
 
 ---
 
