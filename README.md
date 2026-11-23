@@ -5,6 +5,7 @@ cloud cost and usage data in real time.
 
 ## 🔗 Live Demo
 👉 https://deu44mf4thraz.cloudfront.net
+
 💻 **GitHub:** https://github.com/MuriamLuqman6607/aws-finops-dashboard
 
 ## 📌 Overview
@@ -133,7 +134,7 @@ Framework Security Pillar.
 ---
 
 ## 📷 Dashboard Preview
-![Dashboard Preview](screenshot.png)
+![Dashboard Preview](screenshot.PNG)
 
 ## 👤 Author
 Muriam Luqman
