@@ -17,6 +17,7 @@ It automatically generates and serves cloud cost and usage data
 on a schedule — no servers, no manual work.
 
 **Live Demo:** https://deu44mf4thraz.cloudfront.net
+
 **GitHub:** https://github.com/MuriamLuqman6607/aws-finops-dashboard
 
 **What this project demonstrates:**
